@@ -12,7 +12,7 @@
         <ComboBox x:Name="cbCheck2" HorizontalAlignment="Left" Height="27" Margin="24,97,0,0" VerticalAlignment="Top" Width="170" RenderTransformOrigin="1.236,-0.917"/>
         <TextBox x:Name="tbSumm2" HorizontalAlignment="Left" Height="27" Margin="222,97,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164"/>
         <TextBox x:Name="tbSumm" HorizontalAlignment="Left" Height="27" Margin="222,155,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="164"/>
-        <Button x:Name="btTranslate" Content="Перевести" HorizontalAlignment="Left" Margin="24,207,0,0" VerticalAlignment="Top" Width="362" Height="32" Click="btTranslate_Click"/>
+        <Button x:Name="btTranslate" Content="Выполнить перевод" HorizontalAlignment="Left" Margin="24,207,0,0" VerticalAlignment="Top" Width="362" Height="32" Click="btTranslate_Click"/>
         <Label x:Name="label" Content="Перевести со счета:" HorizontalAlignment="Left" Height="27" Margin="24,10,0,0" VerticalAlignment="Top" Width="170"/>
         <Label x:Name="label1" Content="Перевести на счет:" HorizontalAlignment="Left" Height="28" Margin="24,69,0,0" VerticalAlignment="Top" Width="170"/>
         <Label x:Name="label2" Content="Сумма на счете:" HorizontalAlignment="Left" Height="27" Margin="222,10,0,0" VerticalAlignment="Top" Width="164"/>

@@ -9,8 +9,8 @@
     <Grid>
         <TextBox x:Name="tbName" HorizontalAlignment="Left" Height="23" Margin="140,20,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="182"/>
         <TextBox x:Name="tbSumm" HorizontalAlignment="Left" Height="23" Margin="140,54,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="182" RenderTransformOrigin="0.542,1.75"/>
-        <Label x:Name="label" Content="Название счета" HorizontalAlignment="Left" Margin="25,20,0,0" VerticalAlignment="Top" Width="110" Height="29" FontSize="14"/>
-        <Label x:Name="label1" Content="Сумма" HorizontalAlignment="Left" Height="30" Margin="25,54,0,0" VerticalAlignment="Top" Width="110" FontSize="14"/>
+        <Label x:Name="label" Content="Название счета" HorizontalAlignment="Left" Margin="25,15,0,0" VerticalAlignment="Top" Width="110" Height="29" FontSize="14"/>
+        <Label x:Name="label1" Content="Сумма" HorizontalAlignment="Left" Height="30" Margin="25,51,0,0" VerticalAlignment="Top" Width="110" FontSize="14"/>
         <Button x:Name="btAdd" Content="Добавить счет" HorizontalAlignment="Left" Height="38" Margin="25,113,0,0" VerticalAlignment="Top" Width="297" Click="btAdd_Click"/>
     </Grid>
 </Window>

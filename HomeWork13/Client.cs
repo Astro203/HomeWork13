@@ -37,8 +37,8 @@ namespace HomeWork13
             IndexCheck = indexCheck;
         }
             
-    }
-
+    }   
+    
     class IndexClient
     {
         public int Index { get; set; }

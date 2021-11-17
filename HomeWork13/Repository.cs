@@ -30,15 +30,9 @@ namespace HomeWork13
             list = Value;
         }
         public void Translate(int summ, int summ1, int summ2)
-        {
-            if(summ > summ1) { MessageBox.Show("Сумма перевода превышает имеющуюся"); return; }
+        {        
             this.summ2 = summ + summ1;
             this.summ1 = summ1 - summ;
-        }
-
-        public List<T> FileEdit()
-        {
-            return null;
         }
     }
 }
