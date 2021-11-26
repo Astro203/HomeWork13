@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -58,6 +59,39 @@ namespace HomeWork13
             Translate translate = new Translate();
             translate.Show();
         }
+        private void btDel_Click(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists(fileCheck))
+            {
+                Repository<Chek> repository = new Repository<Chek>();
+                json = File.ReadAllText(fileCheck);
+                repository.list = JsonConvert.DeserializeObject<BindingList<Chek>>(json);
+                repository.Close(find(repository.list, lvClients.SelectedIndex), lvCheks.SelectedIndex);                
+                json = JsonConvert.SerializeObject(repository.list);
+                File.WriteAllText(fileCheck, json);
+                MessageBox.Show("Счет закрыт");
+
+                lvCheks.ItemsSource = repository.list;
+
+                repository.list.ListChanged += List_ListChanged;
+
+            }
+        }
+
+        private void List_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            if (e.ListChangedType == ListChangedType.ItemDeleted)
+            {
+                List<Client> clients = new List<Client>();
+                json = File.ReadAllText(fileCLients);
+                clients = JsonConvert.DeserializeObject<List<Client>>(json);
+
+                List<Journal> journal = new List<Journal>();
+                journal.Add(new Journal(clients[lvClients.SelectedIndex], "счет удален"));
+
+                lvJournal.ItemsSource = journal;
+            }
+        }
 
         private void btAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -93,23 +127,9 @@ namespace HomeWork13
             }
         }
 
-        private void btDel_Click(object sender, RoutedEventArgs e)
+        private BindingList<Chek> find(BindingList<Chek> list, int Index)
         {
-            if (File.Exists(fileCheck))
-            {
-                Repository<Chek> repository = new Repository<Chek>();
-                json = File.ReadAllText(fileCheck);
-                repository.list = JsonConvert.DeserializeObject<List<Chek>>(json);
-                repository.Close(find(repository.list, lvClients.SelectedIndex), lvCheks.SelectedIndex);
-                json = JsonConvert.SerializeObject(repository.list);
-                File.WriteAllText(fileCheck, json);
-                MessageBox.Show("Счет закрыт");
-            }
-        }
-
-        private List<Chek> find(List<Chek> list, int Index)
-        {
-            List<Chek> newList = new List<Chek>();
+            BindingList<Chek> newList = new BindingList<Chek>();
             foreach(var item in list)
             {
                 if(item.IndexClient == Index)

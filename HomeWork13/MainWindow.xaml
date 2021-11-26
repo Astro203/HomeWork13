@@ -5,9 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HomeWork13"
         mc:Ignorable="d"
-        Title="Bank A" Height="379" Width="951">
+        Title="Bank A" Height="431" Width="1207">
     <Grid>
-
         <ListView x:Name="lvClients" HorizontalAlignment="Left" Height="291" Margin="24,41,0,0" VerticalAlignment="Top" Width="485" SelectionChanged="lvClients_SelectionChanged">
             <ListView.View>
                 <GridView>
@@ -50,10 +49,31 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label x:Name="label" Content="Информация о клиентах" HorizontalAlignment="Left" Height="26" Margin="24,10,0,0" VerticalAlignment="Top" Width="485"/>
-        <Label x:Name="label1" Content="Счета клиента" HorizontalAlignment="Left" Height="26" Margin="545,10,0,0" VerticalAlignment="Top" Width="347"/>
-        <Button x:Name="btTranslate" Content="Выполнить перевод" HorizontalAlignment="Left" Height="37" Margin="790,125,0,0" VerticalAlignment="Top" Width="132" Click="btTranslate_Click"/>
-        <Button x:Name="btAdd" Content="Добавить счет" HorizontalAlignment="Left" Height="37" Margin="790,41,0,0" VerticalAlignment="Top" Width="132" Click="btAdd_Click"/>
-        <Button x:Name="btDel" Content="Удалить счет" HorizontalAlignment="Left" Height="37" Margin="790,83,0,0" VerticalAlignment="Top" Width="132" RenderTransformOrigin="1.386,2.189" Click="btDel_Click"/>
+        <Label x:Name="label" Content="Информация о клиентах" HorizontalAlignment="Left" Height="26" Margin="23,10,0,0" VerticalAlignment="Top" Width="485"/>
+        <Label x:Name="label1" Content="Счета клиента" HorizontalAlignment="Left" Height="26" Margin="528,10,0,0" VerticalAlignment="Top" Width="228"/>
+        <Button x:Name="btTranslate" Content="Выполнить перевод" HorizontalAlignment="Left" Height="37" Margin="318,337,0,0" VerticalAlignment="Top" Width="132" Click="btTranslate_Click"/>
+        <Button x:Name="btAdd" Content="Добавить счет" HorizontalAlignment="Left" Height="37" Margin="24,337,0,0" VerticalAlignment="Top" Width="132" Click="btAdd_Click" RenderTransformOrigin="-5.583,8.919"/>
+        <Button x:Name="btDel" Content="Удалить счет" HorizontalAlignment="Left" Height="37" Margin="171,337,0,0" VerticalAlignment="Top" Width="132" RenderTransformOrigin="1.386,2.189" Click="btDel_Click"/>
+        <ListView x:Name="lvJournal" HorizontalAlignment="Left" Height="291" Margin="793,41,0,0" VerticalAlignment="Top" Width="367">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding dateTime}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Content="Дата"/>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding name}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Content="Фамилия клиента"/>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="120" DisplayMemberBinding="{Binding operation}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Content="Операция"/>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

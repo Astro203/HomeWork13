@@ -61,6 +61,7 @@
     <Compile Include="Check.xaml.cs">
       <DependentUpon>Check.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Journal.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="Translate.xaml.cs">
       <DependentUpon>Translate.xaml</DependentUpon>

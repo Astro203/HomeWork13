@@ -57,7 +57,11 @@ namespace HomeWork13
 
         private void btTranslate_Click(object sender, RoutedEventArgs e)
         {
-            if (Convert.ToInt32(tbSumm.Text) > Convert.ToInt32(tbSumm1.Text)) MessageBox.Show("Сумма перевода превышает имеющуюся");
+            if (Convert.ToInt32(tbSumm.Text) > Convert.ToInt32(tbSumm1.Text))
+            {
+                MessageBox.Show("Сумма перевода превышает имеющуюся");
+                return;
+            }
             Repository<Chek> repository = new Repository<Chek>();
             repository.Translate(Convert.ToInt32(tbSumm.Text), Convert.ToInt32(tbSumm1.Text), Convert.ToInt32(tbSumm2.Text));
             List<Chek> cheks = new List<Chek>();
@@ -71,6 +75,7 @@ namespace HomeWork13
                 .ForEach(s => s.Summ = repository.summ2);
             json = JsonConvert.SerializeObject(cheks);
             File.WriteAllText(fileChek, json);
+            this.Close();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -40,7 +41,7 @@ namespace HomeWork13
             if(File.Exists(file))
             {
                 json = File.ReadAllText(file);
-                repository.list = JsonConvert.DeserializeObject<List<Chek>>(json);
+                repository.list = JsonConvert.DeserializeObject<BindingList<Chek>>(json);
                 repository.Open(repository.list, new Chek(tbName.Text, Convert.ToInt32(tbSumm.Text), indexClient.Index, repository.list.Count));
                 json = JsonConvert.SerializeObject(repository.list);
                 File.WriteAllText(file, json);
