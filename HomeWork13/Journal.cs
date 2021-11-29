@@ -10,7 +10,7 @@ namespace HomeWork13
     class Journal
     {
         
-        public DateTime dateTime { get; set; }
+        public string dateTime { get; set; }
         
         public string name { get; set; }
         
@@ -18,6 +18,7 @@ namespace HomeWork13
         
         public Journal(Client name, string operation)
         {
+            dateTime = DateTime.Now.ToShortDateString();
             this.name = name.LastName;
             this.operation = operation;
         }

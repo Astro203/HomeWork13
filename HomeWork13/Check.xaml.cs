@@ -53,8 +53,10 @@ namespace HomeWork13
                 json = JsonConvert.SerializeObject(list);
                 File.WriteAllText(file, json);
             }
-            MessageBox.Show("Счет открыт");
+            //MessageBox.Show("Счет открыт");
             this.Close();
+            Chek.Operation message = Chek.ShowMessage;
+            message.Invoke("Счет добавлен");
         }
     }
 }

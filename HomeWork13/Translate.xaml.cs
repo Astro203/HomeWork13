@@ -76,6 +76,9 @@ namespace HomeWork13
             json = JsonConvert.SerializeObject(cheks);
             File.WriteAllText(fileChek, json);
             this.Close();
+
+            Chek.Operation message = Chek.ShowMessage;
+            message.Invoke("Выполнен перевод между счетами");
         }
     }
 }

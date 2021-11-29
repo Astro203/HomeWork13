@@ -23,6 +23,7 @@ namespace HomeWork13
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         string json = "";
         string fileCLients = "Clients.json";
         string fileCheck = "Checks.json";
@@ -69,28 +70,22 @@ namespace HomeWork13
                 repository.Close(find(repository.list, lvClients.SelectedIndex), lvCheks.SelectedIndex);                
                 json = JsonConvert.SerializeObject(repository.list);
                 File.WriteAllText(fileCheck, json);
-                MessageBox.Show("Счет закрыт");
+                //MessageBox.Show("Счет закрыт");
 
                 lvCheks.ItemsSource = repository.list;
-
-                repository.list.ListChanged += List_ListChanged;
-
-            }
-        }
-
-        private void List_ListChanged(object sender, ListChangedEventArgs e)
-        {
-            if (e.ListChangedType == ListChangedType.ItemDeleted)
-            {
                 List<Client> clients = new List<Client>();
                 json = File.ReadAllText(fileCLients);
                 clients = JsonConvert.DeserializeObject<List<Client>>(json);
 
                 List<Journal> journal = new List<Journal>();
-                journal.Add(new Journal(clients[lvClients.SelectedIndex], "счет удален"));
+                journal.Add(new Journal(clients[lvClients.SelectedIndex], "счет закрыт"));
 
                 lvJournal.ItemsSource = journal;
+
+                Chek.Operation message = Chek.ShowMessage;
+                message.Invoke("Счет удален");
             }
+            
         }
 
         private void btAdd_Click(object sender, RoutedEventArgs e)
