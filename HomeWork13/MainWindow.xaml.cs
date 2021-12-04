@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Library;
 
 namespace HomeWork13
 {
@@ -27,6 +28,8 @@ namespace HomeWork13
         string json = "";
         string fileCLients = "Clients.json";
         string fileCheck = "Checks.json";
+        
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -64,7 +67,7 @@ namespace HomeWork13
         {
             if (File.Exists(fileCheck))
             {
-                Repository<Chek> repository = new Repository<Chek>();
+                Repository_<Chek> repository = new Repository_<Chek>();
                 json = File.ReadAllText(fileCheck);
                 repository.list = JsonConvert.DeserializeObject<BindingList<Chek>>(json);
                 repository.Close(find(repository.list, lvClients.SelectedIndex), lvCheks.SelectedIndex);                
@@ -73,7 +76,7 @@ namespace HomeWork13
                 //MessageBox.Show("Счет закрыт");
 
                 lvCheks.ItemsSource = repository.list;
-                List<Client> clients = new List<Client>();
+                var clients = new List<Client>();
                 json = File.ReadAllText(fileCLients);
                 clients = JsonConvert.DeserializeObject<List<Client>>(json);
 
@@ -83,9 +86,8 @@ namespace HomeWork13
                 lvJournal.ItemsSource = journal;
 
                 Chek.Operation message = Chek.ShowMessage;
-                message.Invoke("Счет удален");
-            }
-            
+                message.Invoke("Cчет удален");
+            }          
         }
 
         private void btAdd_Click(object sender, RoutedEventArgs e)

@@ -32,11 +32,11 @@ namespace HomeWork13
 
 
         public string Name{ get; set; }
-        public int Summ { get; set; }
+        public decimal Summ { get; set; }
         public int IndexClient{ get; set; }
         public int IndexCheck { get; set; }
         
-        public Chek(string name, int summ, int indexClient, int indexCheck)
+        public Chek(string name, decimal summ, int indexClient, int indexCheck)
         {
             Name = name;
             Summ = summ;
@@ -48,7 +48,7 @@ namespace HomeWork13
         public delegate void Operation(string Mess);
         public static void ShowMessage(string Mess)
         {
-            MessageBox.Show($"Счет {Mess}");
+            MessageBox.Show($"{Mess}");
         }
 
 

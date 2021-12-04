@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Library;
 
 namespace HomeWork13
 {
@@ -62,8 +63,19 @@ namespace HomeWork13
                 MessageBox.Show("Сумма перевода превышает имеющуюся");
                 return;
             }
-            Repository<Chek> repository = new Repository<Chek>();
-            repository.Translate(Convert.ToInt32(tbSumm.Text), Convert.ToInt32(tbSumm1.Text), Convert.ToInt32(tbSumm2.Text));
+            Repository_<Chek> repository = new Repository_<Chek>();
+
+            decimal summ = 0;
+            bool flag = decimal.TryParse(tbSumm.Text, out summ);
+            if (flag)
+            {
+                repository.Translate(Convert.ToInt32(tbSumm.Text), Convert.ToInt32(tbSumm1.Text), Convert.ToInt32(tbSumm2.Text));
+            }
+            else
+            {
+                MessageBox.Show("Сумма должна быть числом"); return;
+            }
+            
             List<Chek> cheks = new List<Chek>();
             json = File.ReadAllText(fileChek);
             cheks = JsonConvert.DeserializeObject<List<Chek>>(json);

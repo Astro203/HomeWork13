@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Library;
 
 namespace HomeWork13
 {
@@ -37,12 +38,23 @@ namespace HomeWork13
             json = File.ReadAllText("Index.json");
             IndexClient indexClient = JsonConvert.DeserializeObject<IndexClient>(json);
 
-            Repository<Chek> repository = new Repository<Chek>();
+            Repository_<Chek> repository = new Repository_<Chek>();
             if(File.Exists(file))
             {
                 json = File.ReadAllText(file);
                 repository.list = JsonConvert.DeserializeObject<BindingList<Chek>>(json);
-                repository.Open(repository.list, new Chek(tbName.Text, Convert.ToInt32(tbSumm.Text), indexClient.Index, repository.list.Count));
+
+                decimal summ = 0;
+                bool flag = decimal.TryParse(tbSumm.Text, out summ);
+                if (flag)
+                {
+                    repository.Open(repository.list, new Chek(tbName.Text, summ, indexClient.Index, repository.list.Count));
+                }
+                else
+                {
+                    MessageBox.Show("Сумма должна принимать числовле значение"); return;
+                }
+   
                 json = JsonConvert.SerializeObject(repository.list);
                 File.WriteAllText(file, json);
             }
