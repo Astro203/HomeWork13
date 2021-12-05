@@ -32,43 +32,50 @@ namespace HomeWork13
 
         private void btAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (tbName.Text == "") { MessageBox.Show("Счет не может быть безымянным"); return; }
-            if (tbSumm.Text == "") tbSumm.Text = "0";
-
-            json = File.ReadAllText("Index.json");
-            IndexClient indexClient = JsonConvert.DeserializeObject<IndexClient>(json);
-
-            Repository_<Chek> repository = new Repository_<Chek>();
-            if(File.Exists(file))
+            try
             {
-                json = File.ReadAllText(file);
-                repository.list = JsonConvert.DeserializeObject<BindingList<Chek>>(json);
+                if (tbName.Text == "") { MessageBox.Show("Счет не может быть безымянным"); return; }
+                if (tbSumm.Text == "") tbSumm.Text = "0";
 
-                decimal summ = 0;
-                bool flag = decimal.TryParse(tbSumm.Text, out summ);
-                if (flag)
+                json = File.ReadAllText("Index.json");
+                IndexClient indexClient = JsonConvert.DeserializeObject<IndexClient>(json);
+
+                Repository_<Chek> repository = new Repository_<Chek>();
+                if (File.Exists(file))
                 {
-                    repository.Open(repository.list, new Chek(tbName.Text, summ, indexClient.Index, repository.list.Count));
+                    json = File.ReadAllText(file);
+                    repository.list = JsonConvert.DeserializeObject<BindingList<Chek>>(json);
+
+                    decimal summ = 0;
+                    bool flag = decimal.TryParse(tbSumm.Text, out summ);
+                    if (flag)
+                    {
+                        repository.Open(repository.list, new Chek(tbName.Text, summ, indexClient.Index, repository.list.Count));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Сумма должна принимать числовле значение"); return;
+                    }
+
+                    json = JsonConvert.SerializeObject(repository.list);
+                    File.WriteAllText(file, json);
                 }
                 else
                 {
-                    MessageBox.Show("Сумма должна принимать числовле значение"); return;
+                    List<Chek> list = new List<Chek>();
+                    list.Add(new Chek(tbName.Text, Convert.ToInt32(tbSumm.Text), indexClient.Index, 0));
+                    json = JsonConvert.SerializeObject(list);
+                    File.WriteAllText(file, json);
                 }
-   
-                json = JsonConvert.SerializeObject(repository.list);
-                File.WriteAllText(file, json);
+                //MessageBox.Show("Счет открыт");
+                this.Close();
+                Chek.Operation message = Chek.ShowMessage;
+                message.Invoke("Счет добавлен");
             }
-            else
+            catch (FileLoadException)
             {
-                List<Chek> list = new List<Chek>();
-                list.Add(new Chek(tbName.Text, Convert.ToInt32(tbSumm.Text), indexClient.Index, 0));
-                json = JsonConvert.SerializeObject(list);
-                File.WriteAllText(file, json);
+                MessageBox.Show("Ошибка чтения файла");
             }
-            //MessageBox.Show("Счет открыт");
-            this.Close();
-            Chek.Operation message = Chek.ShowMessage;
-            message.Invoke("Счет добавлен");
         }
     }
 }

@@ -35,23 +35,30 @@ namespace HomeWork13
 
             if (File.Exists(fileIndex))
             {
-                json = File.ReadAllText("Index.json");
-                IndexClient indexClient = JsonConvert.DeserializeObject<IndexClient>(json);
-                index = indexClient.Index;
-                if (File.Exists(fileChek))
+                try
                 {
-                    List<Chek> cheks = new List<Chek>();
-                    json = File.ReadAllText(fileChek);
-                    cheks = JsonConvert.DeserializeObject<List<Chek>>(json);                    
-                    foreach (var item in cheks)
+                    json = File.ReadAllText("Index.json");
+                    IndexClient indexClient = JsonConvert.DeserializeObject<IndexClient>(json);
+                    index = indexClient.Index;
+                    if (File.Exists(fileChek))
                     {
-                        if (item.IndexClient == indexClient.Index)
+                        List<Chek> cheks = new List<Chek>();
+                        json = File.ReadAllText(fileChek);
+                        cheks = JsonConvert.DeserializeObject<List<Chek>>(json);
+                        foreach (var item in cheks)
                         {
-                            cbCheck1.Items.Add(item.Name);
-                            cbCheck2.Items.Add(item.Name);
-                            
+                            if (item.IndexClient == indexClient.Index)
+                            {
+                                cbCheck1.Items.Add(item.Name);
+                                cbCheck2.Items.Add(item.Name);
+
+                            }
                         }
                     }
+                }
+                catch (FileLoadException)
+                {
+                    MessageBox.Show("Ошибка чтения файла");
                 }
             }
         }
@@ -75,22 +82,30 @@ namespace HomeWork13
             {
                 MessageBox.Show("Сумма должна быть числом"); return;
             }
-            
-            List<Chek> cheks = new List<Chek>();
-            json = File.ReadAllText(fileChek);
-            cheks = JsonConvert.DeserializeObject<List<Chek>>(json);
-            cheks
-                .FindAll(x => x.IndexClient == index && x.IndexCheck == cbCheck1.SelectedIndex)
-                .ForEach(s => s.Summ = repository.summ1);
-            cheks
-                .FindAll(x => x.IndexClient == index && x.IndexCheck == cbCheck2.SelectedIndex)
-                .ForEach(s => s.Summ = repository.summ2);
-            json = JsonConvert.SerializeObject(cheks);
-            File.WriteAllText(fileChek, json);
-            this.Close();
 
-            Chek.Operation message = Chek.ShowMessage;
-            message.Invoke("Выполнен перевод между счетами");
+            try
+            {
+                List<Chek> cheks = new List<Chek>();
+                json = File.ReadAllText(fileChek);
+                cheks = JsonConvert.DeserializeObject<List<Chek>>(json);
+                cheks
+                    .FindAll(x => x.IndexClient == index && x.IndexCheck == cbCheck1.SelectedIndex)
+                    .ForEach(s => s.Summ = repository.summ1);
+                cheks
+                    .FindAll(x => x.IndexClient == index && x.IndexCheck == cbCheck2.SelectedIndex)
+                    .ForEach(s => s.Summ = repository.summ2);
+                json = JsonConvert.SerializeObject(cheks);
+                File.WriteAllText(fileChek, json);
+
+                this.Close();
+
+                Chek.Operation message = Chek.ShowMessage;
+                message.Invoke("Выполнен перевод между счетами");
+            }
+            catch (FileLoadException)
+            {
+                MessageBox.Show("Ошибка чтения файла");
+            }
         }
     }
 }

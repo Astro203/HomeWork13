@@ -52,8 +52,15 @@ namespace HomeWork13
                 File.WriteAllText(fileCLients, json);
             } else
             {
-                json = File.ReadAllText(fileCLients);
-                clients = JsonConvert.DeserializeObject<List<Client>>(json);
+                try
+                {
+                    json = File.ReadAllText(fileCLients);
+                    clients = JsonConvert.DeserializeObject<List<Client>>(json);
+                }
+                catch (FileLoadException)
+                {
+                    MessageBox.Show("Ошибка чтения файла");
+                }
             }
             lvClients.ItemsSource = clients;
         }
@@ -67,26 +74,33 @@ namespace HomeWork13
         {
             if (File.Exists(fileCheck))
             {
-                Repository_<Chek> repository = new Repository_<Chek>();
-                json = File.ReadAllText(fileCheck);
-                repository.list = JsonConvert.DeserializeObject<BindingList<Chek>>(json);
-                repository.Close(find(repository.list, lvClients.SelectedIndex), lvCheks.SelectedIndex);                
-                json = JsonConvert.SerializeObject(repository.list);
-                File.WriteAllText(fileCheck, json);
-                //MessageBox.Show("Счет закрыт");
+                try
+                {
+                    Repository_<Chek> repository = new Repository_<Chek>();
+                    json = File.ReadAllText(fileCheck);
+                    repository.list = JsonConvert.DeserializeObject<BindingList<Chek>>(json);
+                    repository.Close(find(repository.list, lvClients.SelectedIndex), lvCheks.SelectedIndex);
+                    json = JsonConvert.SerializeObject(repository.list);
+                    File.WriteAllText(fileCheck, json);
+                    //MessageBox.Show("Счет закрыт");
 
-                lvCheks.ItemsSource = repository.list;
-                var clients = new List<Client>();
-                json = File.ReadAllText(fileCLients);
-                clients = JsonConvert.DeserializeObject<List<Client>>(json);
+                    lvCheks.ItemsSource = repository.list;
+                    var clients = new List<Client>();
+                    json = File.ReadAllText(fileCLients);
+                    clients = JsonConvert.DeserializeObject<List<Client>>(json);
 
-                List<Journal> journal = new List<Journal>();
-                journal.Add(new Journal(clients[lvClients.SelectedIndex], "счет закрыт"));
+                    List<Journal> journal = new List<Journal>();
+                    journal.Add(new Journal(clients[lvClients.SelectedIndex], "счет закрыт"));
 
-                lvJournal.ItemsSource = journal;
+                    lvJournal.ItemsSource = journal;
 
-                Chek.Operation message = Chek.ShowMessage;
-                message.Invoke("Cчет удален");
+                    Chek.Operation message = Chek.ShowMessage;
+                    message.Invoke("Cчет удален");
+                }
+                catch (FileLoadException)
+                {
+                    MessageBox.Show("Ошибка чтения файла");
+                }
             }          
         }
 
@@ -101,20 +115,34 @@ namespace HomeWork13
             //json файл для хранения счетов клиентов
             if (File.Exists(fileCheck))
             {
-                json = File.ReadAllText(fileCheck);
-                List<Chek> cheks = new List<Chek>();
-                cheks = JsonConvert.DeserializeObject<List<Chek>>(json);
-                JsonConvert.SerializeObject(cheks);
-                lvCheks.ItemsSource = cheks.Where(findID);
+                try
+                {
+                    json = File.ReadAllText(fileCheck);
+                    List<Chek> cheks = new List<Chek>();
+                    cheks = JsonConvert.DeserializeObject<List<Chek>>(json);
+                    JsonConvert.SerializeObject(cheks);
+                    lvCheks.ItemsSource = cheks.Where(findID);
+                }
+                catch (FileLoadException)
+                {
+                    MessageBox.Show("Ошибка чтения файла");
+                }
             }
             
             //файл для хранения индекса выделенной строки с клиентами
             if(File.Exists("Index.json"))
             {
-                json = File.ReadAllText("Index.json");
-                IndexClient indexClient = new IndexClient(lvClients.SelectedIndex);
-                json = JsonConvert.SerializeObject(indexClient);
-                File.WriteAllText("Index.json", json);
+                try
+                {
+                    json = File.ReadAllText("Index.json");
+                    IndexClient indexClient = new IndexClient(lvClients.SelectedIndex);
+                    json = JsonConvert.SerializeObject(indexClient);
+                    File.WriteAllText("Index.json", json);
+                }
+                catch (FileLoadException)
+                {
+                    MessageBox.Show("Ошибка чтения файла");
+                }
             }
             else
             {
